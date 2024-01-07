@@ -1,23 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import React, { useState } from 'react';
+
+import TextToSpeechApp from './components/TextToSpeechApp';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
+  const [globalSettings, setGlobalSettings] = useState(() => {
+    // Retrieve the initial value from local storage or default to an object
+    const savedSettings = localStorage.getItem('settings');
+    return savedSettings ? JSON.parse(savedSettings) : { advancedMode: false };
+  });
+  const saveGlobalSettings = (newSettings) => {
+    localStorage.setItem('settings', JSON.stringify(newSettings));
+    setGlobalSettings(newSettings);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header settings={globalSettings} saveSettings={saveGlobalSettings} />
+      <TextToSpeechApp settings={globalSettings} />
+      <Footer />
     </div>
   );
 }
