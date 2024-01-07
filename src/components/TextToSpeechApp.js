@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { characterLimit, characterLimitLargeText, backendUrl } from '../config';
+import { characterLimit, characterLimitLargeText, backendBaseUrl } from '../config';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -18,7 +18,7 @@ const TextToSpeechApp = ({settings}) => {
   const isOverLimit = text.length > applicableCharacterLimit;
 
   const sendSmallText = async () => {
-    const response = await fetch(`${backendUrl}`, {
+    const response = await fetch(`${backendBaseUrl}/tts-small`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text }),
@@ -57,7 +57,7 @@ const TextToSpeechApp = ({settings}) => {
       try {
         const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
 
-        const response = await fetch(`${backendUrl}`, {
+        const response = await fetch(`${backendBaseUrl}/tts-large`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ text }),
