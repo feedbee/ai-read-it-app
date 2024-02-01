@@ -71,6 +71,10 @@ const TextToSpeechApp = ({settings}) => {
           body: JSON.stringify({ text }),
         });
 
+        if (!response.ok) {
+          throw Error(`Request failed: ${response.status} ${response.statusText}`);
+        }
+
         const reader = response.body.getReader();
 
         const processChunk = ({ done, value }) => {
@@ -92,6 +96,7 @@ const TextToSpeechApp = ({settings}) => {
 
         reader.read().then(processChunk);
       } catch (err) {
+        console.log(err);
         setError('Error fetching audio stream');
         setLoading(false);
       }
