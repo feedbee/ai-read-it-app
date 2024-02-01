@@ -20,7 +20,7 @@ const TextToSpeechApp = ({settings}) => {
 
   const sendSmallText = async () => {
     try {
-      const response = await apiService.post(`/tts-small`, { text }, {
+      const response = await apiService.post(`/tts/small`, { text }, {
         responseType: 'blob', // Important for handling binary data like audio
       });
   
@@ -65,7 +65,7 @@ const TextToSpeechApp = ({settings}) => {
         if (authHeader) {
           Object.assign(headers, authHeader);
         }
-        const response = await fetch(`${backendBaseUrl}/tts-large`, {
+        const response = await fetch(`${backendBaseUrl}/tts/large`, {
           method: 'POST',
           headers: headers,
           body: JSON.stringify({ text }),
