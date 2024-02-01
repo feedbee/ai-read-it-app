@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import logo from '../ai-read-it-logo.svg';
 
 import SettingsModal from './Settings';
+import UserLogin from './UserLogin';
 
 const Header = ({settings, saveSettings}) => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -13,9 +14,12 @@ const Header = ({settings, saveSettings}) => {
           <img src={logo} alt="AI, Read It! Logo" className="logo" style={{ maxWidth: '40px', height: 'auto', marginRight: '.7em', marginBottom: '.4em' }} />
           <h1 className="ml-3">AI, Read It!</h1>
         </div>
-        <button className="btn" onClick={() => setShowSettingsModal(true)}>
-          <i className="bi bi-gear-fill"></i>
-        </button>
+        <div className="right-side-buttons d-flex align-items-center">
+          <button className="btn" onClick={() => setShowSettingsModal(true)}>
+            <i className="bi bi-gear-fill"></i>
+          </button>
+          <UserLogin></UserLogin>
+        </div>
       </div>
       <SettingsModal 
         show={showSettingsModal}

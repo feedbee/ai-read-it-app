@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { characterLimit, characterLimitLargeText, backendBaseUrl } from '../config';
+import apiService, { getAuthHeader } from '../api/apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
@@ -18,28 +19,30 @@ const TextToSpeechApp = ({settings}) => {
   const isOverLimit = text.length > applicableCharacterLimit;
 
   const sendSmallText = async () => {
-    const response = await fetch(`${backendBaseUrl}/tts-small`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
-    });
+    try {
+      const response = await apiService.post(`/tts-small`, { text }, {
+        responseType: 'blob', // Important for handling binary data like audio
+      });
+  
+      // Assuming successful response, create a URL for the audio blob
+      const newAudioUrl = URL.createObjectURL(response.data);
+      setAudioUrl(newAudioUrl); // Update state or handle the audio URL as needed
 
-    if (!response.ok) {
-      let errorMsg;
-      try {
-        const errorData = await response.json();
-        errorMsg = errorData.error || 'Server error';
-      } catch (jsonError) {
-        // If parsing as JSON fails, use text response
-        errorMsg = await response.text();
+    } catch (error) {
+      let errorMsg = 'Server error'; // Default error message
+      if (error.response && error.response.data) {
+        try {
+          // Attempt to parse error response if it's JSON
+          const errorData = (typeof error.response.data === 'string') ? JSON.parse(error.response.data) : error.response.data;
+          errorMsg = errorData.error || errorMsg;
+        } catch (jsonError) {
+          // If parsing fails, default message is already set
+        }
       }
       throw new Error(errorMsg);
+    } finally {
+      setLoading(false);
     }
-
-    const data = await response.blob();
-    const newAudioUrl = URL.createObjectURL(data);
-    setAudioUrl(newAudioUrl); // Set the new audio URL
-    setLoading(false);
   };
 
   const sendLargeText = async () => {
@@ -57,9 +60,14 @@ const TextToSpeechApp = ({settings}) => {
       try {
         const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
 
+        let headers = { 'Content-Type': 'application/json' };
+        let authHeader = getAuthHeader();
+        if (authHeader) {
+          Object.assign(headers, authHeader);
+        }
         const response = await fetch(`${backendBaseUrl}/tts-large`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: headers,
           body: JSON.stringify({ text }),
         });
 
