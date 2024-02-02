@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
+import { googleClientId } from './config';
 import TextToSpeechApp from './components/TextToSpeechApp';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -22,7 +23,7 @@ function App() {
   };
 
   return (
-    <GoogleOAuthProvider clientId="248458315070-5ik13f59uplr789f8otcrjkj5psqe9cp.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={googleClientId}>
       <UserProvider>
         <div className="App">
           <Header settings={globalSettings} saveSettings={saveGlobalSettings} />
