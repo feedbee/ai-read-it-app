@@ -3,7 +3,7 @@ const MainPage = () => (
     <div class="container">
         <h1>Welcome to <strong>AI, Read It!</strong></h1>
         <p>
-          AI, Read It! is your personal text-to-speech assistant designed to convert your written text into high-quality spoken audio.
+          AI, Read It! is your personal AI-based text-to-speech assistant designed to convert your written text into high-quality spoken audio.
           Perfect for listening to articles, documents, or even your own writing out loud.
         </p>
         <lo class="features">
