@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import TextToSpeechApp from './TextToSpeechApp';
 import MainPage from '../pages/MainPage';
