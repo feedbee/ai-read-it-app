@@ -1,3 +1,7 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css";
+
+body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+
 .App {
   text-align: center;
 }
@@ -59,8 +63,29 @@
 .main-page .container { max-width: 800px; margin: auto; padding-top: 20px; }
 .main-page h1 { color: #333366; }
 .main-page p { margin: 10px 0; }
-.main-page .features { margin: 20px 0; }
-.main-page .feature { font-weight: bold; }
+.main-page .features-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+.main-page .feature-box {
+  flex: 0 0 30%; /* Adjust the flex-basis to control the size, ensuring they fit in a single line */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f4f4;
+  padding: 20px;
+  height: 200px; /* Fixed height to form squares */
+  margin: 15px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for depth */
+}
+.main-page .feature-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333366;
+}
 .main-page .login { background-color: #f4f4f4; padding: 10px; margin-top: 20px; }
 .main-page .login p { color: #333; }
 /* End of Main Page styles */
