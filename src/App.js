@@ -8,12 +8,15 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { googleClientId } from './config';
 import MainView from './components/MainView';
 import { UserProvider } from './context/UserContext';
+import { SettingsProvider } from './context/SettingsContext';
 
 function App() {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <UserProvider>
-        <MainView />
+        <SettingsProvider>
+          <MainView />
+        </SettingsProvider>
       </UserProvider>
     </GoogleOAuthProvider>
   );

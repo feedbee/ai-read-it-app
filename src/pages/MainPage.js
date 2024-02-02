@@ -6,11 +6,11 @@ const MainPage = () => (
           AI, Read It! is your personal AI-based text-to-speech assistant designed to convert your written text into high-quality spoken audio.
           Perfect for listening to articles, documents, or even your own writing out loud.
         </p>
-        <lo class="features">
+        <ul class="features">
             <li><span class="feature">Natural-Sounding Voices:</span> Enjoy a wide range of voices in multiple languages.</li>
             <li><span class="feature">User-Friendly Interface:</span> Our simple design lets you convert text to speech effortlessly.</li>
             <li><span class="feature">Versatile Use Cases:</span> Ideal for audiobooks, e-learning, or enjoying articles audibly.</li>
-        </lo>
+        </ul>
         <div class="login">
             <p>To start using the AI, Read It! app, please log in. Currently, we only support Google login, offering you a quick and secure way to access all our features.</p>
         </div>

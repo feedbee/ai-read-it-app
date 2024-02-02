@@ -3,8 +3,10 @@ import { characterLimit, characterLimitLargeText, backendBaseUrl } from '../conf
 import apiService, { getAuthHeader } from '../api/apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useSettings } from '../context/SettingsContext';
 
-const TextToSpeechApp = ({settings}) => {
+const TextToSpeechApp = () => {
+  const { settings } = useSettings();
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

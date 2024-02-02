@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { SettingsContext } from '../context/SettingsContext';
 
-const SettingsModal = ({ show, close, globalSettings, saveGlobalSettings }) => {
-
-  const [settings, setSettings] = useState(() => {
-    return globalSettings;
-  });
+const SettingsModal = ({ show, close }) => {
+  const { settings, setSettings } = useContext(SettingsContext);
+  const [settingsUnsaved, setSettingsUnsaved] = useState(settings);
 
   // Reset temp options whenever the modal is opened
   useEffect(() => {
-    setSettings(globalSettings);
-  }, [show, globalSettings]);
+    setSettingsUnsaved(settings);
+  }, [show, settings, setSettingsUnsaved]);
 
   // Bind to Esc button
   useEffect(() => {
@@ -29,7 +28,7 @@ const SettingsModal = ({ show, close, globalSettings, saveGlobalSettings }) => {
   }, [close]);
 
   const saveSettings = () => {
-    saveGlobalSettings(settings);
+    setSettings(settingsUnsaved);
     close();
   };
 
@@ -46,8 +45,8 @@ const SettingsModal = ({ show, close, globalSettings, saveGlobalSettings }) => {
               <input 
                 className="form-check-input" 
                 type="checkbox" 
-                checked={settings.advancedMode} 
-                onChange={e => setSettings({...settings, advancedMode: e.target.checked})}
+                checked={settingsUnsaved.advancedMode} 
+                onChange={e => setSettingsUnsaved({...settingsUnsaved, advancedMode: e.target.checked})}
                 id="advancedModeCheckbox" />
               <label className="form-check-label" htmlFor="advancedModeCheckbox">
                 Advanced Mode

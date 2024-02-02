@@ -4,7 +4,7 @@ import logo from '../ai-read-it-logo.svg';
 import SettingsModal from './Settings';
 import UserLogin from './UserLogin';
 
-const Header = ({settings, saveSettings}) => {
+const Header = () => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   return (
@@ -24,8 +24,6 @@ const Header = ({settings, saveSettings}) => {
       <SettingsModal 
         show={showSettingsModal}
         close={() => setShowSettingsModal(false)}
-        globalSettings={settings}
-        saveGlobalSettings={saveSettings}
       />
     </header>
   );

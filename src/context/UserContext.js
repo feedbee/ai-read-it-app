@@ -7,7 +7,7 @@ export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
-  console.log("Cont: ", user);
+  console.info("User loaded: ", user);
 
   useEffect(() => {
     // Update localStorage when user changes
