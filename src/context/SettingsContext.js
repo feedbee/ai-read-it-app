@@ -5,7 +5,7 @@ export const SettingsContext = createContext();
 export const useSettings = () => useContext(SettingsContext);
 
 export const SettingsProvider = ({ children }) => {
-  const [settings, setSettings] = useState(JSON.parse(localStorage.getItem('settings')) || { advancedMode: false });
+  const [settings, setSettings] = useState(JSON.parse(localStorage.getItem('settings')) || { advancedMode: false, voice: 'echo' });
   console.info("Settings loaded: ", settings);
 
   useEffect(() => {

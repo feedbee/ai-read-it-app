@@ -70,7 +70,7 @@ const TextToSpeechApp = () => {
         const response = await fetch(`${backendBaseUrl}/tts/large`, {
           method: 'POST',
           headers: headers,
-          body: JSON.stringify({ text }),
+          body: JSON.stringify({ text, voice: settings.voice }),
         });
 
         if (!response.ok) {

@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
+import { Dropdown, Form } from 'react-bootstrap';
 
 const SettingsModal = ({ show, close }) => {
   const { settings, setSettings } = useContext(SettingsContext);
   const [settingsUnsaved, setSettingsUnsaved] = useState(settings);
+
+  const voices = ['alloy', 'echo', 'fable', 'onyx', 'nova', 'shimmer'];
 
   // Reset temp options whenever the modal is opened
   useEffect(() => {
@@ -41,18 +44,32 @@ const SettingsModal = ({ show, close }) => {
             <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close" onClick={close}></button>
           </div>
           <div className="modal-body">
-            <div className="form-check">
-              <input 
-                className="form-check-input" 
-                type="checkbox" 
-                checked={settingsUnsaved.advancedMode} 
-                onChange={e => setSettingsUnsaved({...settingsUnsaved, advancedMode: e.target.checked})}
-                id="advancedModeCheckbox" />
-              <label className="form-check-label" htmlFor="advancedModeCheckbox">
-                Advanced Mode
-              </label>
-              <div id="advancedModeHelp" className="form-text">Allows processing larger texts using streaming</div>
-            </div>
+            <Form id="settings">
+              <Form.Group controlId="settings.dropdown-voice" className="mb-3">
+                <Dropdown onSelect={(voice) => setSettingsUnsaved({...settingsUnsaved, voice: voice})}>
+                  <Dropdown.Toggle variant="success" id="dropdown-voice" size="sm">
+                    Voice: {settingsUnsaved.voice.charAt(0).toUpperCase() + settingsUnsaved.voice.slice(1)}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    {voices.map((voice, index) => (
+                      <Dropdown.Item eventKey={voice}>{voice.charAt(0).toUpperCase() + voice.slice(1)}</Dropdown.Item>
+                    ))}
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Form.Group>
+              <Form.Group controlId="advancedModeCheckbox">
+                <Form.Check 
+                  type="checkbox"
+                  label="Advanced Mode"
+                  checked={settingsUnsaved.advancedMode}
+                  onChange={e => setSettingsUnsaved({...settingsUnsaved, advancedMode: e.target.checked})}
+                  id="advancedModeCheckbox"
+                />
+                <Form.Text id="advancedModeHelp">
+                  Allows processing larger texts using streaming
+                </Form.Text>
+              </Form.Group>
+            </Form>
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={close}>Close</button>
