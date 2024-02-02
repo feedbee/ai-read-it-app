@@ -54,3 +54,13 @@
   top: 100%; /* Position below the avatar */
   right: 0; /* Align to the right side */
 }
+
+/* Main Page styles */
+.main-page .container { max-width: 800px; margin: auto; padding-top: 20px; }
+.main-page h1 { color: #333366; }
+.main-page p { margin: 10px 0; }
+.main-page .features { margin: 20px 0; }
+.main-page .feature { font-weight: bold; }
+.main-page .login { background-color: #f4f4f4; padding: 10px; margin-top: 20px; }
+.main-page .login p { color: #333; }
+/* End of Main Page styles */
