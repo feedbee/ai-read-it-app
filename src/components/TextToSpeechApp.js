@@ -31,11 +31,19 @@ const TextToSpeechApp = () => {
       setAudioUrl(newAudioUrl); // Update state or handle the audio URL as needed
 
     } catch (error) {
-      let errorMsg = 'Server error'; // Default error message
+      let errorMsg = 'Server request error'; // Default error message
+      if (error.message) {
+        errorMsg += ': ' + error.message;
+      }
       if (error.response && error.response.data) {
         try {
           // Attempt to parse error response if it's JSON
-          const errorData = (typeof error.response.data === 'string') ? JSON.parse(error.response.data) : error.response.data;
+          let errorData = error.response.data;
+          if (typeof error.response.data === 'string') {
+            errorData = JSON.parse(error.response.data);
+          } else if (error.response.data instanceof Blob) {
+            errorData = JSON.parse(await error.response.data.text());
+          }
           errorMsg = errorData.error || errorMsg;
         } catch (jsonError) {
           // If parsing fails, default message is already set
