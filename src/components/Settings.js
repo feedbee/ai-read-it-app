@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
-import { Dropdown, Form } from 'react-bootstrap';
+import { Dropdown, Form, Button } from 'react-bootstrap';
 
 const SettingsModal = ({ show, close }) => {
   const { settings, setSettings } = useContext(SettingsContext);
@@ -52,14 +52,14 @@ const SettingsModal = ({ show, close }) => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     {voices.map((voice, index) => (
-                      <Dropdown.Item eventKey={voice}>{voice.charAt(0).toUpperCase() + voice.slice(1)}</Dropdown.Item>
+                      <Dropdown.Item key={index} eventKey={voice}>{voice.charAt(0).toUpperCase() + voice.slice(1)}</Dropdown.Item>
                     ))}
                   </Dropdown.Menu>
                 </Dropdown>
               </Form.Group>
               <Form.Group controlId="advancedModeCheckbox">
                 <Form.Check 
-                  type="checkbox"
+                  type="switch"
                   label="Advanced Mode"
                   checked={settingsUnsaved.advancedMode}
                   onChange={e => setSettingsUnsaved({...settingsUnsaved, advancedMode: e.target.checked})}
@@ -72,8 +72,8 @@ const SettingsModal = ({ show, close }) => {
             </Form>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={close}>Close</button>
-            <button type="button" className="btn btn-primary" onClick={saveSettings}>Save</button>
+            <Button onClick={close} variant="secondary">Cancel</Button>
+            <Button onClick={saveSettings}>Save</Button>
           </div>
         </div>
       </div>
