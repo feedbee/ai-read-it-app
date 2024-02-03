@@ -82,7 +82,13 @@ const TextToSpeechApp = () => {
         });
 
         if (!response.ok) {
-          throw Error(`Request failed: ${response.status} ${response.statusText}`);
+          let errorMessage;
+          try {
+            errorMessage = (await response.json()).error;
+          } catch (error) {
+            errorMessage = `Request failed: ${response.status} ${response.statusText}`;
+          }
+          throw Error(errorMessage);
         }
 
         const reader = response.body.getReader();
@@ -107,7 +113,7 @@ const TextToSpeechApp = () => {
         reader.read().then(processChunk);
       } catch (err) {
         console.log(err);
-        setError('Error fetching audio stream');
+        setError('Error fetching audio stream: ' + err.message);
         setLoading(false);
       }
     });
@@ -120,7 +126,7 @@ const TextToSpeechApp = () => {
 
     try {
       if (isAdvMode) {
-          await sendLargeText();
+        await sendLargeText();
       } else {
         await sendSmallText();
       }
