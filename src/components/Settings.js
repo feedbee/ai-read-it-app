@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SettingsContext } from '../context/SettingsContext';
-import { Dropdown, Form, Button } from 'react-bootstrap';
+import { Dropdown, Form, Button, Col, Row, Badge, Container } from 'react-bootstrap';
 
 const SettingsModal = ({ show, close }) => {
   const { settings, setSettings } = useContext(SettingsContext);
@@ -45,18 +45,30 @@ const SettingsModal = ({ show, close }) => {
           </div>
           <div className="modal-body">
             <Form id="settings">
-              <Form.Group controlId="settings.dropdown-voice" className="mb-3">
-                <Dropdown onSelect={(voice) => setSettingsUnsaved({...settingsUnsaved, voice: voice})}>
-                  <Dropdown.Toggle variant="success" id="dropdown-voice" size="sm">
-                    Voice: {settingsUnsaved.voice.charAt(0).toUpperCase() + settingsUnsaved.voice.slice(1)}
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    {voices.map((voice, index) => (
-                      <Dropdown.Item key={index} eventKey={voice}>{voice.charAt(0).toUpperCase() + voice.slice(1)}</Dropdown.Item>
-                    ))}
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Form.Group>
+              <Row className="mb-3">
+                <Form.Group as={Col} controlId="settings.dropdown-voice" className="mb-3">
+                  <Form.Label>Voice</Form.Label>
+                  <Dropdown value={settingsUnsaved.voice} onSelect={(voice) => setSettingsUnsaved({...settingsUnsaved, voice: voice})}>
+                    <Dropdown.Toggle variant="success" id="dropdown-voice" size="sm">
+                      {settingsUnsaved.voice.charAt(0).toUpperCase() + settingsUnsaved.voice.slice(1)}
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      {voices.map((voice, index) => (
+                        <Dropdown.Item key={index} eventKey={voice}>{voice.charAt(0).toUpperCase() + voice.slice(1)}</Dropdown.Item>
+                      ))}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Speed</Form.Label>
+                  <Container>
+                    <Row>
+                      <Col sm="auto"><Badge style={{width:'50px'}}>×{settingsUnsaved.speed}</Badge></Col>
+                      <Col><Form.Range min={0.5} max={4} step={0.25} value={settingsUnsaved.speed} id="range-speed" onChange={(e) => setSettingsUnsaved({...settingsUnsaved, speed: e.target.value})} /></Col>
+                    </Row>
+                  </Container>
+                </Form.Group>
+              </Row>
               <Form.Group controlId="advancedModeCheckbox">
                 <Form.Check 
                   type="switch"
