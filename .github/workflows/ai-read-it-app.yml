@@ -21,7 +21,9 @@ jobs:
         run: echo "BUILD_DATE=$(date +'%Y.%m.%d.%H.%M.%S')" >> $GITHUB_ENV
 
       - name: Create .env File
-        run: echo "${{ vars.ENV }}" > .env
+        run: echo "$ENV_CONT" > .env
+        env:
+          ENV_CONT: ${{ vars.ENV }}
 
       - name: Build Docker Image
         run: |
