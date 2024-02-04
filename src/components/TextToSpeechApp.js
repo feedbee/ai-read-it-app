@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { characterLimit, characterLimitLargeText, backendBaseUrl } from '../config';
 import apiService, { getAuthHeader } from '../api/apiService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useSettings } from '../context/SettingsContext';
+import { CreditsContext } from '../context/CreditsContext';
 
 const TextToSpeechApp = () => {
   const { settings } = useSettings();
@@ -12,6 +13,7 @@ const TextToSpeechApp = () => {
   const [error, setError] = useState('');
   const [audioUrl, setAudioUrl] = useState(''); // simple mode
   const audioRef = useRef(null); // advanced mode
+  const {updateCredits} = useContext(CreditsContext);
 
   const isAdvMode = settings.advancedMode;
 
@@ -133,6 +135,8 @@ const TextToSpeechApp = () => {
     } catch (err) {
       setError(err.message);
       setLoading(false);
+    } finally {
+      updateCredits(10);
     }
   };
 

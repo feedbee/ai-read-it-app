@@ -9,14 +9,17 @@ import { googleClientId } from './config';
 import MainView from './components/MainView';
 import { UserProvider } from './context/UserContext';
 import { SettingsProvider } from './context/SettingsContext';
+import { CreditsProvider} from './context/CreditsContext';
 
 function App() {
   return (
     <GoogleOAuthProvider clientId={googleClientId}>
       <UserProvider>
-        <SettingsProvider>
-          <MainView />
-        </SettingsProvider>
+        <CreditsProvider>
+          <SettingsProvider>
+            <MainView />
+          </SettingsProvider>
+        </CreditsProvider>
       </UserProvider>
     </GoogleOAuthProvider>
   );

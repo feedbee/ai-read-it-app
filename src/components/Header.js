@@ -3,6 +3,7 @@ import logo from '../ai-read-it-logo.svg';
 
 import SettingsModal from './Settings';
 import UserLogin from './UserLogin';
+import CreditBalance from './CreditBalance';
 
 const Header = () => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
@@ -15,6 +16,7 @@ const Header = () => {
           <h1 className="ml-3">AI, Read It!</h1>
         </div>
         <div className="right-side-buttons d-flex align-items-center">
+          <CreditBalance></CreditBalance>
           <button className="btn" onClick={() => setShowSettingsModal(true)}>
             <i className="bi bi-gear-fill"></i>
           </button>
